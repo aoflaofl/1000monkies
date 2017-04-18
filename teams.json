@@ -1,0 +1,90 @@
+{
+  "POR": {
+    "fullname": "Portland",
+    "conference": "West"
+  },
+  "CLB": {
+    "fullname": "Columbus",
+    "conference": "East"
+  },
+  "OCSC": {
+    "fullname": "Orlando",
+    "conference": "East"
+  },
+  "SKC": {
+    "fullname": "Sporting Kansas City",
+    "conference": "West"
+  },
+  "FCD": {
+    "fullname": "FC Dallas",
+    "conference": "West"
+  },
+  "CHI": {
+    "fullname": "Chicago",
+    "conference": "East"
+  },
+  "NYC": {
+    "fullname": "Ney York City FC",
+    "conference": "East"
+  },
+  "HOU": {
+    "fullname": "Houston",
+    "conference": "West"
+  },
+  "NYRB": {
+    "fullname": "New York Red Bulls",
+    "conference": "East"
+  },
+  "ATL": {
+    "fullname": "Atlanta",
+    "conference": "East"
+  },
+  "SJ": {
+    "fullname": "San Jose Earthquakes",
+    "conference": "West"
+  },
+  "RSL": {
+    "fullname": "Real Salt Lake",
+    "conference": "West"
+  },
+  "NE": {
+    "fullname": "New England",
+    "conference": "East"
+  },
+  "VAN": {
+    "fullname": "Vancouver",
+    "conference": "West"
+  },
+  "DC": {
+    "fullname": "D.C. United",
+    "conference": "East"
+  },
+  "TFC": {
+    "fullname": "Toronto",
+    "conference": "East"
+  },
+  "LAG": {
+    "fullname": "Los Angeles Galaxy",
+    "conference": "West"
+  },
+  "SEA": {
+    "fullname": "Seattle",
+    "conference": "West"
+  },
+  "MTL": {
+    "fullname": "Montreal",
+    "conference": "East"
+  },
+  "MNU": {
+    "fullname": "Minnesota United",
+    "conference": "West"
+  },
+  "COL": {
+    "fullname": "Colorado",
+    "conference": "West"
+  },
+  "PHI": {
+    "fullname": "Philadelphia",
+    "conference": "East"
+  }
+}
