@@ -1,0 +1,104 @@
+{
+  "week": 3,
+  "Sat Mar 18 2017": [{
+    "home": {
+      "team": "POR",
+      "score": "4"
+    },
+    "away": {
+      "team": "HOU",
+      "score": "2"
+    }
+  }, {
+    "home": {
+      "team": "RSL",
+      "score": "1"
+    },
+    "away": {
+      "team": "LAG",
+      "score": "2"
+    }
+  }, {
+    "home": {
+      "team": "COL",
+      "score": "2"
+    },
+    "away": {
+      "team": "MNU",
+      "score": "2"
+    }
+  }, {
+    "home": {
+      "team": "SKC",
+      "score": "2"
+    },
+    "away": {
+      "team": "SJ",
+      "score": "1"
+    }
+  }, {
+    "home": {
+      "team": "FCD",
+      "score": "2"
+    },
+    "away": {
+      "team": "NE",
+      "score": "1"
+    }
+  }, {
+    "home": {
+      "team": "OCSC",
+      "score": "2"
+    },
+    "away": {
+      "team": "PHI",
+      "score": "1"
+    }
+  }, {
+    "home": {
+      "team": "DC",
+      "score": "0"
+    },
+    "away": {
+      "team": "CLB",
+      "score": "2"
+    }
+  }, {
+    "home": {
+      "team": "ATL",
+      "score": "4"
+    },
+    "away": {
+      "team": "CHI",
+      "score": "0"
+    }
+  }, {
+    "home": {
+      "team": "VAN",
+      "score": "0"
+    },
+    "away": {
+      "team": "TFC",
+      "score": "2"
+    }
+  }, {
+    "home": {
+      "team": "NYFC",
+      "score": "1"
+    },
+    "away": {
+      "team": "MTL",
+      "score": "1"
+    }
+  }],
+  "Sun Mar 19 2017": [{
+    "home": {
+      "team": "SEA",
+      "score": "3"
+    },
+    "away": {
+      "team": "NYRB",
+      "score": "1"
+    }
+  }]
+}
