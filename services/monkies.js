@@ -7,14 +7,20 @@ const teams = require('./teams.js');
 // "SJ": [12, 23, 3],
 // "POR": [2, 33, 1]
 // }
+const write = opts => {
+  opts = opts || {};
+  const monkeyFilename = opts.monkeyFilename || 'monkies.json';
+  const monkiesObj = opts.monkiesObj || {};
 
-var init = (opts) => {
+  fs.writeFileSync(monkeyFilename, JSON.stringify(monkiesObj));
+};
+
+const init = opts => {
   opts = opts || {};
 
-  teamFilename = opts.teamFilename || 'teams.json';
-  monkeyFilename = opts.monkeyFilename || 'monkies.json';
-  numberOfMonkies = opts.numberOfMonkies || 1000;
-  forceNewMonkiesFile = opts.forceNewMonkiesFile || false;
+  const monkeyFilename = opts.monkeyFilename || 'monkies.json';
+  const numberOfMonkies = opts.numberOfMonkies || 1000;
+  const forceNewMonkiesFile = opts.forceNewMonkiesFile || false;
 
   // Delete the monkey file if it already exists and force is true
   if (fs.existsSync(monkeyFilename)) {
@@ -26,19 +32,19 @@ var init = (opts) => {
   }
 
   console.log('Fetching teams data.');
-  var teamsObj = teams.fetch();
+  const teamsObj = teams.fetch();
 
   console.log('Creating empty monkies object.');
-  var monkiesObj = {};
-  Object.keys(teamsObj).forEach((team) => {
+  const monkiesObj = {};
+  Object.keys(teamsObj).forEach(team => {
     monkiesObj[team] = [0];
   });
 
-  var teamAry = Object.keys(monkiesObj);
+  const teamAry = Object.keys(monkiesObj);
 
   console.log(`Randomly assigning ${numberOfMonkies} monkies to teams.`);
-  for (i = 0; i < numberOfMonkies; i++) {
-    var monkeysTeam = _.sample(teamAry);
+  for (let i = 0; i < numberOfMonkies; i++) {
+    const monkeysTeam = _.sample(teamAry);
     monkiesObj[monkeysTeam][0]++;
   }
 
@@ -50,25 +56,17 @@ var init = (opts) => {
   });
 };
 
-var fetch = (file) => {
+const fetch = file => {
   try {
-    var monkeyString = fs.readFileSync(file || './monkies.json');
+    const monkeyString = fs.readFileSync(file || './monkies.json');
     return JSON.parse(monkeyString);
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
     return [];
   }
 };
 
-var write = (opts) => {
-  opts = opts || {};
-  monkeyFilename = opts.monkeyFilename || 'monkies.json';
-  monkiesObj = opts.monkiesObj || {};
-
-  fs.writeFileSync(monkeyFilename, JSON.stringify(monkiesObj));
-};
-
 module.exports = {
-    fetch, 
-    init
+  fetch,
+  init
 };

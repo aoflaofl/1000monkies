@@ -1,11 +1,12 @@
 const yargs = require('yargs');
-const fs = require('fs');
 const _ = require('lodash');
 
 const monkies = require('./services/monkies.js');
 const teams = require('./services/teams.js');
+const standings = require('./services/standings.js');
 
-var monkeyOptions = {
+// TODO: Put this in a file
+const monkeyOptions = {
   teamFilename: 'teams.json',
   monkeyFilename: 'monkies.json',
   numberOfMonkies: 1000,
@@ -27,21 +28,36 @@ const argv = yargs
       boolean: true
     }
   })
+  .demandCommand(1)
   .help('h')
   .alias('h', 'help')
   .argv;
-var command = argv._[0];
+const command = argv._[0];
 
 if (command === 'initMonkies') {
   monkeyOptions.forceNewMonkiesFile = argv.force;
   monkies.init(monkeyOptions);
 } else if (command === 'standings') {
-  var fixtures = teams.fetchTeamsAndFixtures(monkeyOptions);
-  console.log(JSON.stringify(fixtures.SJ, undefined, 2));
+  const teamsAndFixtures = teams.fetchTeamsAndFixtures(monkeyOptions);
 
-  _.forEach(fixtures.SJ.fixtures, (v, k) => {
-    console.log(k);
-    console.log(v);
-    console.log(teams.resultScore('SJ', v));
+  _.forEach(teamsAndFixtures, (teamObj, teamName) => {
+    console.log(JSON.stringify(teamObj.homeFixtures, undefined, 2));
+
+    standings.record(teamName, teamObj.homeFixtures);
+    standings.record(teamName, teamObj.awayFixtures);
   });
 }
+
+/*
+
+     Total number of wins
+    Goal Differential (GD)
+    Goals For (GF)
+    Fewest Disciplinary Points*
+    Away Goals Differential
+    Away Goal For
+    Home Goals Differential
+    Home Goal For
+    Coin Toss (tie of 2 clubs) or Drawing of Lots (tie of 3 or more clubs)
+
+*/

@@ -4,12 +4,22 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "xo"
   },
   "author": "Gene Johannsen",
   "license": "ISC",
   "dependencies": {
+    "enum": "^2.4.0",
     "lodash": "^4.17.4",
     "yargs": "^7.1.0"
+  },
+  "devDependencies": {
+    "xo": "^0.18.1"
+  },
+  "xo": {
+    "space": true,
+    "rules": {
+      "no-warning-comments": "off"
+    }
   }
 }
