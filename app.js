@@ -1,24 +1,24 @@
 const yargs = require('yargs');
 const _ = require('lodash');
 
-const monkies = require('./services/monkies.js');
+const monkeys = require('./services/monkeys.js');
 const teams = require('./services/teams.js');
 const standings = require('./services/standings.js');
 
 // TODO: Put this in a file
 const monkeyOptions = {
   teamFilename: 'teams.json',
-  monkeyFilename: 'monkies.json',
-  numberOfMonkies: 1000,
-  forceNewMonkiesFile: false,
+  monkeyFilename: 'monkeys.json',
+  numberOfMonkeys: 1000,
+  forceNewMonkeysFile: false,
   season: '2017',
   resultsDir: '.\\results'
 };
 
 const argv = yargs
-  .command('initMonkies', `Initialize ${monkeyOptions.monkeyFilename}.  If file exists, must use --force`, {
+  .command('initMonkeys', `Initialize ${monkeyOptions.monkeyFilename}.  If file exists, must use --force`, {
     force: {
-      description: 'Force removal of monkies file',
+      description: 'Force removal of monkeys file',
       boolean: true
     }
   })
@@ -34,17 +34,19 @@ const argv = yargs
   .argv;
 const command = argv._[0];
 
-if (command === 'initMonkies') {
-  monkeyOptions.forceNewMonkiesFile = argv.force;
-  monkies.init(monkeyOptions);
+if (command === 'initMonkeys') {
+  monkeyOptions.forceNewMonkeysFile = argv.force;
+  monkeys.init(monkeyOptions);
 } else if (command === 'standings') {
   const teamsAndFixtures = teams.fetchTeamsAndFixtures(monkeyOptions);
 
   _.forEach(teamsAndFixtures, (teamObj, teamName) => {
-    console.log(JSON.stringify(teamObj.homeFixtures, undefined, 2));
+    teamObj.stats = {
+      home: standings.genStats(teamName, teamObj.fixtures.home),
+      away: standings.genStats(teamName, teamObj.fixtures.away)
+    };
 
-    standings.record(teamName, teamObj.homeFixtures);
-    standings.record(teamName, teamObj.awayFixtures);
+    console.log(JSON.stringify(teamObj, undefined, 2));
   });
 }
 

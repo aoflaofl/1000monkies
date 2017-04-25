@@ -1,3 +1,3 @@
-# 1000monkies
+# 1000monkeys
 
-Just a silly experiment to see if 1000 monkies can pick winning soccer teams.
+Just a silly experiment to see if 1000 monkeys can pick winning soccer teams.

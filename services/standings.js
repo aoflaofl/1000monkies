@@ -3,6 +3,8 @@ const Enum = require('enum');
 
 const resultsEnum = new Enum(['DRAW', 'HOME_WIN', 'AWAY_WIN']);
 
+const sidesEnum = new Enum(['HOME', 'AWAY']);
+
 const gameResult = fixture => {
   let result = resultsEnum.DRAW;
   if (fixture.home.score > fixture.away.score) {
@@ -14,75 +16,57 @@ const gameResult = fixture => {
   return result;
 };
 
-const resultScore = (team, fixture) => {
-  const result = gameResult(fixture);
-
-  if (result === resultsEnum.DRAW) {
-    return 1;
-  }
-  if (team === fixture.home.team) {
-    if (result === resultsEnum.HOME_WIN) {
-      return 3;
-    }
-    return 0;
-  }
-  if (result === resultsEnum.HOME_WIN) {
-    return 0;
-  }
-  return 3;
-};
-
 const teamIsHome = (team, fixture) => {
   return fixture.home.team === team;
 };
 
-const standingsPoints = (team, teamFixtures) => {
-  let tot = 0;
-  _.forEach(teamFixtures, fixture => {
-    console.log(fixture);
-    tot += resultScore(team, fixture);
-    console.log(resultScore(team, fixture));
-  });
-  console.log(`Total is ${tot}`);
-};
-
-const record = (team, teamFixtures) => {
-  const retObj = {
+const genStats = (team, teamFixtures) => {
+  const record = {
     wins: 0,
     losses: 0,
     draws: 0
   };
 
+  const goals = {
+    for: 0,
+    against: 0
+  };
+
   _.forEach(teamFixtures, fixture => {
     if (teamIsHome(team, fixture)) {
+      goals.for += Number(fixture.home.score);
+      goals.against += Number(fixture.away.score);
       switch (gameResult(fixture)) {
-        case resultsEnum.HOME_WIN:
-          retObj.wins++;
-          break;
-        case resultsEnum.AWAY_WIN:
-          retObj.losses++;
-          break;
-        default:
-          retObj.draws++;
+      case resultsEnum.HOME_WIN:
+        record.wins++;
+        break;
+      case resultsEnum.AWAY_WIN:
+        record.losses++;
+        break;
+      default:
+        record.draws++;
       }
     } else {
+      goals.against += Number(fixture.home.score);
+      goals.for += Number(fixture.away.score);
       switch (gameResult(fixture)) {
-        case resultsEnum.HOME_WIN:
-          retObj.losses++;
-          break;
-        case resultsEnum.AWAY_WIN:
-          retObj.wins++;
-          break;
-        default:
-          retObj.draws++;
+      case resultsEnum.HOME_WIN:
+        record.losses++;
+        break;
+      case resultsEnum.AWAY_WIN:
+        record.wins++;
+        break;
+      default:
+        record.draws++;
       }
     }
   });
 
-  console.log(retObj);
-  return retObj;
+  return {
+    record, goals
+  };
 };
 
 module.exports = {
-  resultScore, standingsPoints, record
+  genStats
 };

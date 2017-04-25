@@ -9,22 +9,22 @@ const teams = require('./teams.js');
 // }
 const write = opts => {
   opts = opts || {};
-  const monkeyFilename = opts.monkeyFilename || 'monkies.json';
-  const monkiesObj = opts.monkiesObj || {};
+  const monkeyFilename = opts.monkeyFilename || 'monkeys.json';
+  const monkeysObj = opts.monkeysObj || {};
 
-  fs.writeFileSync(monkeyFilename, JSON.stringify(monkiesObj));
+  fs.writeFileSync(monkeyFilename, JSON.stringify(monkeysObj));
 };
 
 const init = opts => {
   opts = opts || {};
 
-  const monkeyFilename = opts.monkeyFilename || 'monkies.json';
-  const numberOfMonkies = opts.numberOfMonkies || 1000;
-  const forceNewMonkiesFile = opts.forceNewMonkiesFile || false;
+  const monkeyFilename = opts.monkeyFilename || 'monkeys.json';
+  const numberOfMonkeys = opts.numberOfMonkeys || 1000;
+  const forceNewMonkeysFile = opts.forceNewMonkeysFile || false;
 
   // Delete the monkey file if it already exists and force is true
   if (fs.existsSync(monkeyFilename)) {
-    if (!forceNewMonkiesFile) {
+    if (!forceNewMonkeysFile) {
       return console.log(`Performing this action deletes the existing ${monkeyFilename} file permanently.\nUse --force option if you want to do this.`);
     }
     console.log(`Removing ${monkeyFilename}.`);
@@ -34,31 +34,31 @@ const init = opts => {
   console.log('Fetching teams data.');
   const teamsObj = teams.fetch();
 
-  console.log('Creating empty monkies object.');
-  const monkiesObj = {};
+  console.log('Creating empty monkeys object.');
+  const monkeysObj = {};
   Object.keys(teamsObj).forEach(team => {
-    monkiesObj[team] = [0];
+    monkeysObj[team] = [0];
   });
 
-  const teamAry = Object.keys(monkiesObj);
+  const teamAry = Object.keys(monkeysObj);
 
-  console.log(`Randomly assigning ${numberOfMonkies} monkies to teams.`);
-  for (let i = 0; i < numberOfMonkies; i++) {
+  console.log(`Randomly assigning ${numberOfMonkeys} monkeys to teams.`);
+  for (let i = 0; i < numberOfMonkeys; i++) {
     const monkeysTeam = _.sample(teamAry);
-    monkiesObj[monkeysTeam][0]++;
+    monkeysObj[monkeysTeam][0]++;
   }
 
-  console.log(monkiesObj);
+  console.log(monkeysObj);
 
   console.log(`Writing new ${monkeyFilename}.`);
   write({
-    monkeyFilename, monkiesObj
+    monkeyFilename, monkeysObj
   });
 };
 
 const fetch = file => {
   try {
-    const monkeyString = fs.readFileSync(file || './monkies.json');
+    const monkeyString = fs.readFileSync(file || './monkeys.json');
     return JSON.parse(monkeyString);
   } catch (err) {
     console.log(err);

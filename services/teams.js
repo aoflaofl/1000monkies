@@ -37,14 +37,18 @@ const addFixtureToTeams = (teamsObj, fixture, date) => {
   // HomeTeam.fixtures = homeTeam.fixtures || {};
   // homeTeam.fixtures[date] = fixture;
 
-  homeTeam.homeFixtures = homeTeam.homeFixtures || {};
-  homeTeam.homeFixtures[date] = fixture;
+  homeTeam.fixtures = homeTeam.fixtures || {};
+
+  homeTeam.fixtures.home = homeTeam.fixtures.home || {};
+  homeTeam.fixtures.home[date] = fixture;
 
   // AwayTeam.fixtures = awayTeam.fixtures || {};
   // awayTeam.fixtures[date] = fixture;
 
-  awayTeam.awayFixtures = awayTeam.awayFixtures || {};
-  awayTeam.awayFixtures[date] = fixture;
+  awayTeam.fixtures = awayTeam.fixtures || {};
+
+  awayTeam.fixtures.away = awayTeam.fixtures.away || {};
+  awayTeam.fixtures.away[date] = fixture;
 };
 
 const fetchTeamsAndFixtures = opt => {
