@@ -22,6 +22,23 @@ const fetch = fname => {
   }
 };
 
+const fetchAll = opt => {
+  const retObj = {};
+
+  const resultFiles = fetchFileNames(opt);
+
+  _.forEach(resultFiles, resultFile => {
+    const resultObj = fetch(resultFile);
+
+    _.forEach(resultObj, (fixturesAry, date) => {
+      retObj[date] = retObj[date] || [];
+      retObj[date] = _.concat(retObj[date], fixturesAry);
+    });
+  });
+
+  return retObj;
+};
+
 module.exports = {
-  fetchFileNames, fetch
+  fetchFileNames, fetch, fetchAll
 };
