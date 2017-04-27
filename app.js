@@ -46,7 +46,13 @@ if (command === 'initMonkeys') {
       away: standings.genStats(teamName, teamObj.fixtures.away)
     };
 
-    console.log(JSON.stringify(teamObj, undefined, 2));
+    teamObj.standingsPoints = standings.points(teamObj.stats);
+  });
+
+  console.log(JSON.stringify(teamsAndFixtures, undefined, 2));
+
+  _.forEach(teamsAndFixtures, teamObj => {
+    console.log(`${teamObj.fullname}, ${teamObj.conference}, ${teamObj.standingsPoints.total}`);
   });
 }
 

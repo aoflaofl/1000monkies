@@ -35,18 +35,22 @@ const addFixtureToTeams = (teamsObj, fixture, date) => {
   const awayTeam = teamsObj[fixture.away.team];
 
   homeTeam.fixtures = homeTeam.fixtures || {
-    home: {},
-    away: {}
+    home: [],
+    away: []
   };
 
-  homeTeam.fixtures.home[date] = fixture;
+  homeTeam.fixtures.home.push({
+    date, fixture
+  });
 
   awayTeam.fixtures = awayTeam.fixtures || {
-    home: {},
-    away: {}
+    home: [],
+    away: []
   };
 
-  awayTeam.fixtures.away[date] = fixture;
+  awayTeam.fixtures.away.push({
+    date, fixture
+  });
 };
 
 const fetchTeamsAndFixtures = opt => {

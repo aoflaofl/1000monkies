@@ -21,6 +21,8 @@ const teamIsHome = (team, fixture) => {
 };
 
 const genStats = (team, teamFixtures) => {
+  console.log(JSON.stringify(teamFixtures, undefined, 2));
+
   const record = {
     wins: 0,
     losses: 0,
@@ -33,10 +35,10 @@ const genStats = (team, teamFixtures) => {
   };
 
   _.forEach(teamFixtures, fixture => {
-    if (teamIsHome(team, fixture)) {
-      goals.for += Number(fixture.home.score);
-      goals.against += Number(fixture.away.score);
-      switch (gameResult(fixture)) {
+    if (teamIsHome(team, fixture.fixture)) {
+      goals.for += Number(fixture.fixture.home.score);
+      goals.against += Number(fixture.fixture.away.score);
+      switch (gameResult(fixture.fixture)) {
       case resultsEnum.HOME_WIN:
         record.wins++;
         break;
@@ -47,9 +49,9 @@ const genStats = (team, teamFixtures) => {
         record.draws++;
       }
     } else {
-      goals.against += Number(fixture.home.score);
-      goals.for += Number(fixture.away.score);
-      switch (gameResult(fixture)) {
+      goals.against += Number(fixture.fixture.home.score);
+      goals.for += Number(fixture.fixture.away.score);
+      switch (gameResult(fixture.fixture)) {
       case resultsEnum.HOME_WIN:
         record.losses++;
         break;
@@ -67,6 +69,22 @@ const genStats = (team, teamFixtures) => {
   };
 };
 
+const points = stats => {
+  console.log(stats);
+
+  const retObj = {
+    home: 0,
+    away: 0,
+    total: 0
+  };
+
+  retObj.home = (stats.home.record.wins * 3) + stats.home.record.draws;
+  retObj.away = (stats.away.record.wins * 3) + stats.away.record.draws;
+  retObj.total = retObj.home + retObj.away;
+
+  return retObj;
+};
+
 module.exports = {
-  genStats
+  genStats, points
 };

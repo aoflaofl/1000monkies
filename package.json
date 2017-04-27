@@ -19,7 +19,10 @@
   "xo": {
     "space": true,
     "rules": {
-      "no-warning-comments": "off"
+      "no-warning-comments": "off",
+      "indent": ["error", 2, {
+        "SwitchCase": 0
+      }]
     }
   }
 }
