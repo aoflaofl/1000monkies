@@ -6,14 +6,12 @@ const resultsEnum = new Enum(['DRAW', 'HOME_WIN', 'AWAY_WIN']);
 const sidesEnum = new Enum(['HOME', 'AWAY']);
 
 const gameResult = fixture => {
-  let result = resultsEnum.DRAW;
   if (fixture.home.score > fixture.away.score) {
-    result = resultsEnum.HOME_WIN;
+    return resultsEnum.HOME_WIN;
   } else if (fixture.home.score < fixture.away.score) {
-    result = resultsEnum.AWAY_WIN;
+    return resultsEnum.AWAY_WIN;
   }
-
-  return result;
+  return resultsEnum.DRAW;
 };
 
 const teamIsHome = (team, fixture) => {
@@ -21,7 +19,7 @@ const teamIsHome = (team, fixture) => {
 };
 
 const genStats = (team, teamFixtures) => {
-  console.log(JSON.stringify(teamFixtures, undefined, 2));
+  let gamesPlayed = 0;
 
   const record = {
     wins: 0,
@@ -35,6 +33,10 @@ const genStats = (team, teamFixtures) => {
   };
 
   _.forEach(teamFixtures, fixture => {
+    console.log(fixture);
+    console.log('------------------');
+
+    gamesPlayed++;
     if (teamIsHome(team, fixture.fixture)) {
       goals.for += Number(fixture.fixture.home.score);
       goals.against += Number(fixture.fixture.away.score);
@@ -65,7 +67,7 @@ const genStats = (team, teamFixtures) => {
   });
 
   return {
-    record, goals
+    gamesPlayed, record, goals
   };
 };
 
@@ -85,6 +87,15 @@ const points = stats => {
   return retObj;
 };
 
+const makeStatsObj = (teamObj, teamName) => {
+  teamObj.stats = {
+    home: genStats(teamName, teamObj.fixtures.home),
+    away: genStats(teamName, teamObj.fixtures.away)
+  };
+
+  teamObj.standingsPoints = points(teamObj.stats);
+};
+
 module.exports = {
-  genStats, points
+  points, makeStatsObj
 };

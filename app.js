@@ -4,6 +4,7 @@ const _ = require('lodash');
 const monkeys = require('./services/monkeys.js');
 const teams = require('./services/teams.js');
 const standings = require('./services/standings.js');
+const stats = require('./services/stats.js');
 
 // TODO: Put this in a file
 const monkeyOptions = {
@@ -40,20 +41,21 @@ if (command === 'initMonkeys') {
 } else if (command === 'standings') {
   const teamsAndFixtures = teams.fetchTeamsAndFixtures(monkeyOptions);
 
-  _.forEach(teamsAndFixtures, (teamObj, teamName) => {
-    teamObj.stats = {
-      home: standings.genStats(teamName, teamObj.fixtures.home),
-      away: standings.genStats(teamName, teamObj.fixtures.away)
-    };
-
-    teamObj.standingsPoints = standings.points(teamObj.stats);
-  });
+  _.forEach(teamsAndFixtures, standings.makeStatsObj);
 
   console.log(JSON.stringify(teamsAndFixtures, undefined, 2));
 
   _.forEach(teamsAndFixtures, teamObj => {
     console.log(`${teamObj.fullname}, ${teamObj.conference}, ${teamObj.standingsPoints.total}`);
+    console.log(stats.sorting(teamObj.stats));
+    teamObj.sortingStats = stats.sorting(teamObj.stats);
   });
+
+  let orderedTeams = _.sortBy(teamsAndFixtures, o => {
+    return -o.standingsPoints.total;
+  });
+
+  _.forEach(orderedTeams, stats.report);
 }
 
 /*

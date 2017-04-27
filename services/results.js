@@ -31,8 +31,7 @@ const fetchAll = opt => {
     const resultObj = fetch(resultFile);
 
     _.forEach(resultObj, (fixturesAry, date) => {
-      retObj[date] = retObj[date] || [];
-      retObj[date] = _.concat(retObj[date], fixturesAry);
+      retObj[date] = _.concat((retObj[date] || []), fixturesAry);
     });
   });
 

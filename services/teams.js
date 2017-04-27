@@ -20,9 +20,9 @@ const flatten = teamsObj => {
   return retObj;
 };
 
-const fetch = () => {
+const fetch = fname => {
   try {
-    const teamsString = fs.readFileSync('./teams.json');
+    const teamsString = fs.readFileSync(fname);
     return flatten(JSON.parse(teamsString));
   } catch (err) {
     console.log(err);
@@ -54,7 +54,7 @@ const addFixtureToTeams = (teamsObj, fixture, date) => {
 };
 
 const fetchTeamsAndFixtures = opt => {
-  const teamsObj = fetch();
+  const teamsObj = fetch(opt.teamFilename);
 
   const resultObj = results.fetchAll(opt);
   Object.keys(resultObj).forEach(date => {
