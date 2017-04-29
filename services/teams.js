@@ -63,7 +63,30 @@ const fetchTeamsAndFixtures = opt => {
     });
   });
 
-  return teamsObj;
+  const fixturesObj = {};
+
+  _.forEach(resultObj, (fixtureAry, date) => {
+    _.forEach(fixtureAry, v => {
+      const homeSide = v.home.team;
+      const awaySide = v.away.team;
+
+      fixturesObj[homeSide] = fixturesObj[homeSide] || {
+        home: {},
+        away: {}
+      };
+      fixturesObj[awaySide] = fixturesObj[awaySide] || {
+        home: {},
+        away: {}
+      };
+
+      fixturesObj[homeSide].home[date] = v;
+      fixturesObj[awaySide].away[date] = v;
+    });
+  });
+
+  console.log(fixturesObj);
+
+  return fixturesObj;
 };
 
 module.exports = {

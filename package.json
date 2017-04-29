@@ -18,11 +18,13 @@
   },
   "xo": {
     "space": true,
+    "ignore": "tools\\*",
     "rules": {
       "no-warning-comments": "off",
       "indent": ["error", 2, {
         "SwitchCase": 0
-      }]
+      }],
+      "capitalized-comments": "off"
     }
   }
 }

@@ -15,6 +15,7 @@ const gameResult = fixture => {
 };
 
 const teamIsHome = (team, fixture) => {
+  console.log(team, fixture);
   return fixture.home.team === team;
 };
 
@@ -33,14 +34,14 @@ const genStats = (team, teamFixtures) => {
   };
 
   _.forEach(teamFixtures, fixture => {
-    console.log(fixture);
-    console.log('------------------');
+    // console.log(fixture);
+    // console.log('------------------');
 
     gamesPlayed++;
-    if (teamIsHome(team, fixture.fixture)) {
-      goals.for += Number(fixture.fixture.home.score);
-      goals.against += Number(fixture.fixture.away.score);
-      switch (gameResult(fixture.fixture)) {
+    if (teamIsHome(team, fixture)) {
+      goals.for += Number(fixture.home.score);
+      goals.against += Number(fixture.away.score);
+      switch (gameResult(fixture)) {
       case resultsEnum.HOME_WIN:
         record.wins++;
         break;
@@ -51,9 +52,9 @@ const genStats = (team, teamFixtures) => {
         record.draws++;
       }
     } else {
-      goals.against += Number(fixture.fixture.home.score);
-      goals.for += Number(fixture.fixture.away.score);
-      switch (gameResult(fixture.fixture)) {
+      goals.against += Number(fixture.home.score);
+      goals.for += Number(fixture.away.score);
+      switch (gameResult(fixture)) {
       case resultsEnum.HOME_WIN:
         record.losses++;
         break;
@@ -72,7 +73,7 @@ const genStats = (team, teamFixtures) => {
 };
 
 const points = stats => {
-  console.log(stats);
+  //  console.log(stats);
 
   const retObj = {
     home: 0,
@@ -89,8 +90,8 @@ const points = stats => {
 
 const makeStatsObj = (teamObj, teamName) => {
   teamObj.stats = {
-    home: genStats(teamName, teamObj.fixtures.home),
-    away: genStats(teamName, teamObj.fixtures.away)
+    home: genStats(teamName, teamObj.home),
+    away: genStats(teamName, teamObj.away)
   };
 
   teamObj.standingsPoints = points(teamObj.stats);

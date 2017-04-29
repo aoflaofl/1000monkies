@@ -39,35 +39,25 @@ if (command === 'initMonkeys') {
   monkeyOptions.forceNewMonkeysFile = argv.force;
   monkeys.init(monkeyOptions);
 } else if (command === 'standings') {
-  const teamsAndFixtures = teams.fetchTeamsAndFixtures(monkeyOptions);
+  const teamsObj = teams.fetch(monkeyOptions.teamFilename);
+  console.log(teamsObj);
 
-  _.forEach(teamsAndFixtures, standings.makeStatsObj);
+  const fixtures = teams.fetchTeamsAndFixtures(monkeyOptions);
+  console.log(JSON.stringify(fixtures, undefined, 2));
 
-  console.log(JSON.stringify(teamsAndFixtures, undefined, 2));
+  _.forEach(fixtures, standings.makeStatsObj);
 
-  _.forEach(teamsAndFixtures, teamObj => {
-    console.log(`${teamObj.fullname}, ${teamObj.conference}, ${teamObj.standingsPoints.total}`);
-    console.log(stats.sorting(teamObj.stats));
+  // console.log(JSON.stringify(teamsAndFixtures, undefined, 2));
+
+  _.forEach(fixtures, teamObj => {
+    //  console.log(`${teamObj.fullname}, ${teamObj.conference}, ${teamObj.standingsPoints.total}`);
+    // console.log(stats.sorting(teamObj.stats));
     teamObj.sortingStats = stats.sorting(teamObj.stats);
   });
 
-  let orderedTeams = _.sortBy(teamsAndFixtures, o => {
+  const orderedTeams = _.sortBy(fixtures, o => {
     return -o.standingsPoints.total;
   });
 
-  _.forEach(orderedTeams, stats.report);
+  //  _.forEach(orderedTeams, stats.report);
 }
-
-/*
-
-     Total number of wins
-    Goal Differential (GD)
-    Goals For (GF)
-    Fewest Disciplinary Points*
-    Away Goals Differential
-    Away Goal For
-    Home Goals Differential
-    Home Goal For
-    Coin Toss (tie of 2 clubs) or Drawing of Lots (tie of 3 or more clubs)
-
-*/
